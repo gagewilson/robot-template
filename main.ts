@@ -54,9 +54,19 @@ function sensor () {
     pins.digitalWritePin(DigitalPin.P1, 0)
     distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) + 58
 }
+let counter = 0
 let distance = 0
 basic.showIcon(IconNames.Target)
 distance = 2
 basic.forever(function () {
-	
+    counter = 0
+    for (let index = 0; index < 4; index++) {
+        sensor()
+        if (distance <= 10) {
+            counter += 1
+        }
+    }
+    if (counter == 4) {
+        stop()
+    }
 })
